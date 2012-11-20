@@ -20,9 +20,9 @@ class Buffer
         return @buffer.join( " " )
     end
     def remove(n)
-	val = @buffer[n]
+    val = @buffer[n]
         @buffer.delete_at(n)
-	return val
+    return val
     end
 end
 
@@ -32,10 +32,10 @@ class PasteCommand < Command
         @token = token
     end
     def execute()
-	Buffer.instance.insert(@n, @token)
+    Buffer.instance.insert(@n, @token)
     end
     def unexecute()
-	Buffer.instance.remove(@n)
+    Buffer.instance.remove(@n)
     end
 end
 
@@ -45,10 +45,10 @@ class RemoveCommand < Command
         @n = n
     end
     def execute()
-	@token = Buffer.instance.remove(@n)
+    @token = Buffer.instance.remove(@n)
     end
     def unexecute()
-	Buffer.instance.insert(@n, @token)
+    Buffer.instance.insert(@n, @token)
     end
 end
 
@@ -77,14 +77,24 @@ example_driver()
 class Invoker
     def initialize()
         @undoqueue = []
+        @redoqueue = []
     end
     def do(x)
-	x.execute()
+        x.execute()
         @undoqueue << x
+        @redoqueue = []
     end
     def undo()
         x = @undoqueue.pop()
-	x.unexecute() if x
+        x.unexecute() if x
+        @redoqueue << x if x
+    end
+    def redo()
+        x = @redoqueue.pop()
+        if (x) 
+            x.execute()
+            @undoqueue << x
+        end
     end
 end
 class BufferInvoker < Invoker
@@ -93,6 +103,10 @@ class BufferInvoker < Invoker
         puts(Buffer.instance.string())
     end
     def undo()
+        super()
+        puts(Buffer.instance.string())
+    end
+    def redo()
         super()
         puts(Buffer.instance.string())
     end
@@ -109,6 +123,9 @@ def example_invoker()
     ].each { |x| invoker.do( x ) }
     for i in (1..5)
         invoker.undo()
+    end
+    for i in (1..5)
+        invoker.redo()
     end
 end
 
