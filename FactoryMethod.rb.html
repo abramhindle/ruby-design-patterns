@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.36 in css mode. -->
+<html>
+  <head>
+    <title>FactoryMethod.rb</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #000000;
+        background-color: #ffffff;
+      }
+      .function-name {
+        /* font-lock-function-name-face */
+        color: #0000ff;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #a020f0;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #8b2252;
+      }
+      .type {
+        /* font-lock-type-face */
+        color: #228b22;
+      }
+      .variable-name {
+        /* font-lock-variable-name-face */
+        color: #a0522d;
+      }
+
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+<span class="keyword">class</span> <span class="type">Printer</span>
+  <span class="keyword">def</span> <span class="function-name">print_header</span>(header)
+  <span class="keyword">end</span>
+  <span class="keyword">def</span> <span class="function-name">print_body</span>(body)
+  <span class="keyword">end</span>
+  <span class="keyword">def</span> <span class="function-name">print_footer</span>(footer)
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">class</span> <span class="type">AsciiPrinter</span> &lt; <span class="type">Printer</span>
+<span class="keyword">end</span>
+<span class="keyword">class</span> <span class="type">AsciiDraftPrinter</span> &lt; <span class="type">AsciiPrinter</span>
+<span class="keyword">end</span>
+<span class="keyword">class</span> <span class="type">PostScriptPrinter</span> &lt; <span class="type">Printer</span>
+<span class="keyword">end</span>
+<span class="keyword">class</span> <span class="type">PostScriptDraftPrinter</span> &lt; <span class="type">PostScriptPrinter</span>
+<span class="keyword">end</span>
+
+
+<span class="keyword">class</span> <span class="type">Report</span>
+  <span class="keyword">def</span> <span class="function-name">get_printer</span>(type)
+    <span class="keyword">throw</span> <span class="string">"Abstract: Please Overload"</span>
+  <span class="keyword">end</span>
+  <span class="keyword">def</span> <span class="function-name">print_report</span>(type)
+    printer = get_printer(type)
+    printer.print_header(<span class="variable-name">@header</span>)
+    printer.print_body(<span class="variable-name">@body</span>)
+    printer.print_footer(<span class="variable-name">@footer</span>)
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">class</span> <span class="type">DraftReport</span> &lt; <span class="type">Report</span>
+  <span class="keyword">def</span> <span class="function-name">get_printer</span>(type)
+    <span class="keyword">if</span> (type == <span class="string">"ascii"</span>)
+      <span class="keyword">return</span> <span class="type">AsciiDraftPrinter</span>.new()
+    <span class="keyword">elsif</span> (type == <span class="string">"postscript"</span>)
+      <span class="keyword">return</span> <span class="type">PostScriptDraftPrinter</span>.new()
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">class</span> <span class="type">BasicReport</span> &lt; <span class="type">Report</span>
+  <span class="keyword">def</span> <span class="function-name">get_printer</span>(type)
+    <span class="keyword">if</span> (type == <span class="string">"ascii"</span>)
+      <span class="keyword">return</span> <span class="type">AsciiPrinter</span>.new()
+    <span class="keyword">elsif</span> (type == <span class="string">"postscript"</span>)
+      <span class="keyword">return</span> <span class="type">PostScriptPrinter</span>.new()
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+  </body>
+</html>
