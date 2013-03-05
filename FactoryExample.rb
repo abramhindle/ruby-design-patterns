@@ -5,7 +5,7 @@ class CommandFactory
   def create_command(name)
     if (name == "Paste")
       return PasteCommand.new(@context)
-    else if (name == "Cut")
+    elsif (name == "Cut")
       return CutCommand.new(@context)
     else
       throw ("Could Not Construct "+name)

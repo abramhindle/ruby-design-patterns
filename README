@@ -3,3 +3,12 @@ A talk about Design Patterns in Ruby.
 It is Dry because it is supposed to be. This is the basics of OO and ruby definitely can handle them. These patterns described are very relevant to Ruby code.
 
 -- Abram 
+
+=== License ===
+
+Usually (c) 2013 Abram Hindle, Ken Wong
+
+All Slides are under either CC-BY 3.0 or CC-BY-SA 3.0 (c) 2013 Abram Hindle unless otherwise noted.
+ruby-design-patterns-partI.odp is explicitly licensed as (c) 2012 Abram Hindle and Ken Wong CC-BY-SA 3.0
+
+All source code is under CC0 (public domain) unless otherwise noted (I waive all rights to the source code examples).
