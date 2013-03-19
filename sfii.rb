@@ -106,6 +106,45 @@ end
 class None < Move
 end
 
+class FireballMoveConditional
+  def initialize()
+    @state = :none
+  end
+  def say()
+    return "HaDoKen!"
+  end
+  # this example has a state value as a guard
+  # but if I mess up the conditional then all 
+  # hell breaks loose
+  def nextState( context, move, action )
+    if    (@state == :none && move.down()) then
+      @state = :ha 
+    elsif (@state == :ha && move.down()) then
+      @state = :ha
+    elsif (@state == :ha && move.downForward()) then
+      @state = :do
+    elsif (@state == :do && move.forward() && action.punch()) then
+      # the body of the state machine is put into 
+      # these conditional blocks
+      context.execute(FireballMove.new())
+      @state = :none
+    else
+      # the general default behaviour is here
+      # but sometimes different states have default 
+      # behaviour too
+      @state = :none
+    end
+    return self
+  end
+end
+
+class MockContext
+  def execute(v)
+    puts(v)
+  end
+end
+
+
 
 class FireballMove
   def say()
